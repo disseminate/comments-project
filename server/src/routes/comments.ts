@@ -64,13 +64,12 @@ Router.post('/', bodyParser.json(), async (req, res) => {
     user_name: userName,
     user_avatar: userAvatar,
     created_at: new Date(),
-    upvotes: 0,
     ...body,
   };
 
   await Database('comments').insert(newComment);
 
-  res.status(200).json(newComment);
+  res.status(200).json({ ...newComment, upvotes: 0 });
   res.end();
 });
 
