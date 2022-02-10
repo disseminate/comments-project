@@ -49,7 +49,17 @@ const createElementHelper = (tag, parent, attrs) => {
       commentAuthor.innerHTML = comment.user_name;
       commentAuthorLine.appendChild(document.createTextNode('\xa0•\xa0'));
       const commentTimestamp = createElementHelper('span', commentAuthorLine, { class: 'comment-timestamp' });
-      commentTimestamp.innerHTML = '45 min ago'; // todo
+
+      const now = luxon.DateTime.local();
+      const then = luxon.DateTime.fromJSDate(new Date(comment.created_at));
+      const diff = now.diff(then, 'minutes');
+      const hourDiff = now.diff(then, 'hours');
+
+      if (hourDiff.hours > 1) {
+        commentTimestamp.innerHTML = `a while ago`;
+      } else {
+        commentTimestamp.innerHTML = `${Math.floor(diff.minutes)} min ago`;
+      }
 
       const commentBody = createElementHelper('div', commentContents, { class: 'comment-body' });
       commentBody.appendChild(document.createTextNode(comment.body));
