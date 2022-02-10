@@ -1,8 +1,12 @@
 import * as express from 'express';
+import * as cors from 'cors';
+
 import { Init } from './lib/db';
 import CommentsRouter from './routes/comments';
 
 const app = express();
+
+app.use(cors());
 
 app.use(`/comments`, CommentsRouter);
 

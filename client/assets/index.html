@@ -7,11 +7,11 @@
   <body>
     <div id="app">
       <h1>Discussion</h1>
-      <div class="comment-box">
+      <form id="comment-form" class="comment-box">
         <img src="https://randomuser.me/api/portraits/women/29.jpg" class="profile-photo" />
-        <input type="text" placeholder="What are your thoughts?" />
-        <button type="submit" class="button">Comment</button>
-      </div>
+        <input type="text" placeholder="What are your thoughts?" id="comment-entry" />
+        <button type="submit" class="button" id="comment-button">Comment</button>
+      </form>
       <hr />
       <div id="comment-list">
         <div class="comment">
