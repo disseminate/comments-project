@@ -52,7 +52,7 @@ Router.post('/', bodyParser.json(), async (req, res) => {
 
   try {
     const profileResp = await fetch(`https://randomuser.me/api/`);
-    const profile: { results: RandomProfileResponse } = await profileResp.json();
+    const profile: { results: RandomProfileResponse[] } = await profileResp.json();
     userName = profile.results[0].name.first + ' ' + profile.results[0].name.last;
     userAvatar = profile.results[0].picture.large;
   } catch (err) {
@@ -64,6 +64,7 @@ Router.post('/', bodyParser.json(), async (req, res) => {
     user_name: userName,
     user_avatar: userAvatar,
     created_at: new Date(),
+    upvotes: 0,
     ...body,
   };
 

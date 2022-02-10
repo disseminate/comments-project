@@ -31,13 +31,20 @@ const createElementHelper = (tag, parent, attrs) => {
     });
     if (resp.status === 200) {
       commentsList[commentsList.findIndex((v) => v.id === id)].upvotes++;
-      commentsList.sort((a, b) => b.upvotes - a.upvotes);
       renderComments();
     }
   };
 
   const renderComments = async () => {
     commentList.innerHTML = '';
+
+    commentsList.sort((a, b) => {
+      if (a.upvotes === b.upvotes) {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }
+      return b.upvotes - a.upvotes;
+    });
+
     for (const comment of commentsList) {
       const commentObj = createElementHelper('div', null, { class: 'comment' });
 
@@ -92,7 +99,6 @@ const createElementHelper = (tag, parent, attrs) => {
 
     if (comments) {
       commentsList = comments.comments;
-      commentsList.sort((a, b) => b.upvotes - a.upvotes);
       renderComments();
     }
   };
@@ -113,7 +119,6 @@ const createElementHelper = (tag, parent, attrs) => {
       });
       const data = await resp.json();
       commentsList.unshift(data);
-      commentsList.sort((a, b) => b.upvotes - a.upvotes);
       await renderComments();
     } catch (err) {
       // todo - print message to user
