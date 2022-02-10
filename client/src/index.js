@@ -29,7 +29,11 @@ const createElementHelper = (tag, parent, attrs) => {
       },
       body: JSON.stringify({}),
     });
-    const data = await resp.json();
+    if (resp.status === 200) {
+      commentsList[commentsList.findIndex((v) => v.id === id)].upvotes++;
+      commentsList.sort((a, b) => b.upvotes - a.upvotes);
+      renderComments();
+    }
   };
 
   const renderComments = async () => {
@@ -78,6 +82,7 @@ const createElementHelper = (tag, parent, attrs) => {
 
     if (comments) {
       commentsList = comments.comments;
+      commentsList.sort((a, b) => b.upvotes - a.upvotes);
       renderComments();
     }
   };
@@ -98,6 +103,7 @@ const createElementHelper = (tag, parent, attrs) => {
       });
       const data = await resp.json();
       commentsList.unshift(data);
+      commentsList.sort((a, b) => b.upvotes - a.upvotes);
       await renderComments();
     } catch (err) {
       // todo - print message to user
