@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Obscurely Named Comments Project</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Discussion</h1>
+      <div class="comment-box">
+        <img src="https://randomuser.me/api/portraits/women/29.jpg" class="profile-photo" />
+        <input type="text" placeholder="What are your thoughts?" />
+        <button type="submit" class="button">Comment</button>
+      </div>
+      <hr />
+      <div id="comment-list">
+        <div class="comment">
+          <div class="comment-image">
+            <img src="https://randomuser.me/api/portraits/men/42.jpg" class="profile-photo" />
+          </div>
+          <div class="comment-contents">
+            <div class="comment-author-line">
+              <span class="comment-author">Rob Hope</span>
+              &nbsp; &bull; &nbsp;
+              <span class="comment-timestamp">45 min ago</span>
+            </div>
+            <div class="comment-body">
+              Rhoncus eleifend vitae porta proin a fermentum laoreet sem a suspendisse lacinia volutpat phasellus orci vestibulum pretium
+              condimentum a ut vehicula proin leo massa feugiat.Adipiscing conubia mattis nec pharetra condimentum a etiam venenatis augue a
+              laoreet senectus a.
+            </div>
+            <div class="comment-controls">
+              <button type="button" class="comment-button">^ Upvote</button>
+              <button type="button" class="comment-button">Reply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../src/index.js"></script>
+  </body>
+</html>
