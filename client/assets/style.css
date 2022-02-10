@@ -68,6 +68,7 @@ hr {
   justify-content: start;
   align-items: flex-start;
   flex-wrap: nowrap;
+  margin-bottom: 30px;
 }
 .comment-contents {
   flex-grow: 1;
