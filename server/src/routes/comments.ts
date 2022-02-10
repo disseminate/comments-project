@@ -8,14 +8,18 @@ import * as bodyParser from 'body-parser';
 const Router = express.Router();
 
 Router.get('/', async (req, res) => {
-  const comments = await Database('comments')
-    .select({
-      id: 'id',
-      user_avatar: 'user_avatar',
-      user_name: 'user_name',
-      created_at: 'created_at',
-      body: 'body',
-    })
+  const comments = await Database.select({
+    id: 'comments.id',
+    user_avatar: 'comments.user_avatar',
+    user_name: 'comments.user_name',
+    created_at: 'comments.created_at',
+    body: 'comments.body',
+    upvotes: Database('upvotes').count('*').whereRaw('?? = ??', ['upvotes.comment_id', 'comments.id']),
+  })
+    .from('comments')
+    .leftJoin('upvotes', 'comments.id', 'upvotes.comment_id')
+    .groupBy('comments.id')
+    .orderBy('upvotes', 'desc')
     .orderBy('created_at', 'desc');
 
   res.status(200).json({ comments });
