@@ -21,6 +21,17 @@ const createElementHelper = (tag, parent, attrs) => {
 
   let commentsList = [];
 
+  const upvoteComment = async (id) => {
+    const resp = await fetch(`http://localhost:4321/comments/${id}/upvote`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+    const data = await resp.json();
+  };
+
   const renderComments = async () => {
     commentList.innerHTML = '';
     for (const comment of commentsList) {
@@ -42,6 +53,12 @@ const createElementHelper = (tag, parent, attrs) => {
       const commentControls = createElementHelper('div', commentContents, { class: 'comment-controls' });
       const upvoteButton = createElementHelper('button', commentControls, { type: 'button', class: 'comment-button' });
       upvoteButton.appendChild(document.createTextNode('^ Upvote'));
+
+      upvoteButton.onclick = (evt) => {
+        evt.preventDefault();
+        upvoteComment(comment.id);
+      };
+
       const replyButton = createElementHelper('button', commentControls, { type: 'button', class: 'comment-button' });
       replyButton.appendChild(document.createTextNode('Reply'));
 

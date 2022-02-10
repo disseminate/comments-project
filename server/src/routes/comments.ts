@@ -69,4 +69,22 @@ Router.post('/', bodyParser.json(), async (req, res) => {
   res.end();
 });
 
+Router.post('/:id/upvote', async (req, res) => {
+  const comment = await Database('comments').select({ id: 'id' }).where('id', req.params.id).first();
+  if (!comment) {
+    res.status(400).end();
+    return;
+  }
+
+  const newUpvote = {
+    id: randomUUID(),
+    comment_id: comment.id,
+  };
+
+  await Database('upvotes').insert(newUpvote);
+
+  res.status(200).json(newUpvote);
+  res.end();
+});
+
 export default Router;
