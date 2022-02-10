@@ -42,10 +42,13 @@ h1 {
   padding: 10px 20px;
   cursor: pointer;
   margin-left: 20px;
-  transition: background-color 0.1s;
+  transition: background-color 0.1s, opacity 0.1s;
 }
 .comment-box button:hover {
   background: rgb(171, 50, 241);
+}
+.comment-box button:disabled {
+  opacity: 0.5;
 }
 
 .profile-photo {
