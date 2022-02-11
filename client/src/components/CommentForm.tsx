@@ -1,9 +1,6 @@
 import * as React from 'react';
-import Comment from '../models/Comment';
 
-interface CommentFormProps {
-  onSubmitted: (data: Comment) => void;
-}
+interface CommentFormProps {}
 
 const CommentForm: React.FC<CommentFormProps> = (props) => {
   const [value, setValue] = React.useState('');
@@ -28,14 +25,13 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
         body: JSON.stringify({ body: value }),
       });
       const data = await resp.json();
-      props.onSubmitted(data);
     } catch (err) {
       // todo - print message to user
       console.error(err);
     }
     setSubmitting(false);
     setValue('');
-  }, [value, props.onSubmitted]);
+  }, [value]);
 
   const onSubmit = React.useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +39,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
 
       submitComment();
     },
-    [value, props.onSubmitted, submitComment]
+    [value, submitComment]
   );
 
   const onKeyDown = React.useCallback(
@@ -54,7 +50,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
         submitComment();
       }
     },
-    [value, props.onSubmitted, submitComment]
+    [value, submitComment]
   );
 
   return (

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { randomUUID } from 'crypto';
 import fetch from 'node-fetch';
 import * as bodyParser from 'body-parser';
+import Sockets from '../lib/sockets';
 
 const Router = express.Router();
 
@@ -69,6 +70,8 @@ Router.post('/', bodyParser.json(), async (req, res) => {
 
   await Database('comments').insert(newComment);
 
+  Sockets.Broadcast('comment', newComment);
+
   res.status(200).json({ ...newComment, upvotes: 0 });
   res.end();
 });
@@ -86,6 +89,8 @@ Router.post('/:id/upvote', async (req, res) => {
   };
 
   await Database('upvotes').insert(newUpvote);
+
+  Sockets.Broadcast('upvote', { id: comment.id });
 
   res.status(200).json(newUpvote);
   res.end();
