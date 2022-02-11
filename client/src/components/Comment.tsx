@@ -4,7 +4,6 @@ import { DateTime } from 'luxon';
 
 interface CommentProps {
   comment: Comment;
-  onUpvote: () => void;
 }
 
 const CommentElement: React.FC<CommentProps> = (props) => {
@@ -16,10 +15,7 @@ const CommentElement: React.FC<CommentProps> = (props) => {
       },
       body: JSON.stringify({}),
     });
-    if (resp.status === 200) {
-      props.onUpvote();
-    }
-  }, [props.comment.id, props.onUpvote]);
+  }, [props.comment.id]);
 
   const now = DateTime.local();
   const then = DateTime.fromJSDate(new Date(props.comment.created_at));
