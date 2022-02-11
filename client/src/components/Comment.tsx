@@ -31,8 +31,6 @@ const CommentElement: React.FC<CommentProps> = (props) => {
     timestamp = `${Math.floor(diff.minutes)} min ago`;
   }
 
-  console.log(props.childComments);
-
   return (
     <>
       <div className="comment">

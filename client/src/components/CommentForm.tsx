@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-interface CommentFormProps {}
+interface CommentFormProps {
+  parentCommentId?: string;
+}
 
 const CommentForm: React.FC<CommentFormProps> = (props) => {
   const [value, setValue] = React.useState('');
@@ -22,7 +24,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify({ body: value }),
+        body: JSON.stringify({ body: value, parent_comment_id: props.parentCommentId }),
       });
       const data = await resp.json();
     } catch (err) {
@@ -31,7 +33,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
     }
     setSubmitting(false);
     setValue('');
-  }, [value]);
+  }, [value, props.parentCommentId]);
 
   const onSubmit = React.useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
