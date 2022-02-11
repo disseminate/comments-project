@@ -6,6 +6,8 @@ interface Comment {
   created_at: number;
   body: string;
   upvotes: number;
+
+  children?: Comment[];
 }
 
 export default Comment;
