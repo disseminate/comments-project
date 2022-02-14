@@ -2,6 +2,7 @@ import * as React from 'react';
 
 interface CommentFormProps {
   parentCommentId?: string;
+  onSubmit?: () => void;
 }
 
 const CommentForm: React.FC<CommentFormProps> = (props) => {
@@ -18,6 +19,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
     if (inputRef.current) {
       inputRef.current.value = '';
     }
+
     try {
       const resp = await fetch(`http://localhost:4321/comments`, {
         method: 'POST',
@@ -27,13 +29,15 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
         body: JSON.stringify({ body: value, parent_comment_id: props.parentCommentId }),
       });
       const data = await resp.json();
+
+      props.onSubmit && props.onSubmit();
     } catch (err) {
       // todo - print message to user
       console.error(err);
     }
     setSubmitting(false);
     setValue('');
-  }, [value, props.parentCommentId]);
+  }, [value, props.parentCommentId, props.onSubmit]);
 
   const onSubmit = React.useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
