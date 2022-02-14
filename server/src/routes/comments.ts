@@ -11,6 +11,7 @@ const Router = express.Router();
 Router.get('/', async (req, res) => {
   const comments = await Database.select({
     id: 'comments.id',
+    parent_comment_id: 'comments.parent_comment_id',
     user_avatar: 'comments.user_avatar',
     user_name: 'comments.user_name',
     created_at: 'comments.created_at',
@@ -28,6 +29,7 @@ Router.get('/', async (req, res) => {
 
 const commentSchema = Yup.object({
   body: Yup.string().required(),
+  parent_comment_id: Yup.string().uuid().optional(),
 });
 
 interface RandomProfileResponse {
@@ -38,7 +40,7 @@ interface RandomProfileResponse {
 }
 
 Router.post('/', bodyParser.json(), async (req, res) => {
-  let body: { body: string } = null;
+  let body: { body: string; parent_comment_id?: string } = null;
 
   try {
     body = await commentSchema.validate(req.body);
@@ -46,6 +48,14 @@ Router.post('/', bodyParser.json(), async (req, res) => {
     console.error(err);
     res.status(400).end();
     return;
+  }
+
+  if (body.parent_comment_id) {
+    const parentComment = await Database('comments').select('id').where('id', body.parent_comment_id).first();
+    if (!parentComment) {
+      res.status(400).end();
+      return;
+    }
   }
 
   let userName = 'User Name';
@@ -64,6 +74,7 @@ Router.post('/', bodyParser.json(), async (req, res) => {
     id: randomUUID(),
     user_name: userName,
     user_avatar: userAvatar,
+    parent_comment_id: body.parent_comment_id,
     created_at: new Date(),
     ...body,
   };

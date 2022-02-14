@@ -16,6 +16,7 @@ export const Init = async () => {
     if (!has) {
       return Database.schema.createTableIfNotExists('comments', (builder) => {
         builder.uuid('id').unique();
+        builder.uuid('parent_comment_id');
         builder.string('user_avatar'); // user fields would be in a user table if one existed
         builder.string('user_name');
         builder.dateTime('created_at');

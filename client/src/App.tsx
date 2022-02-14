@@ -11,7 +11,7 @@ const App: React.FC = () => {
     let mounted = true;
 
     fetch(`http://localhost:4321/comments`).then((resp) => {
-      resp.json().then((data) => {
+      resp.json().then((data: { comments: Comment[] }) => {
         if (mounted) {
           setComments(data.comments);
         }
@@ -65,7 +65,7 @@ const App: React.FC = () => {
       <h1>Discussion</h1>
       <CommentForm />
       <hr />
-      <CommentList comments={comments} />
+      <CommentList comments={comments} parentId={null} />
     </>
   );
 };
