@@ -11,7 +11,7 @@ interface CommentProps {
 
 const CommentElement: React.FC<CommentProps> = (props) => {
   const upvote = React.useCallback(async () => {
-    const resp = await fetch(`http://localhost:4321/comments/${props.comment.id}/upvote`, {
+    const resp = await fetch(`${process.env.API_BASE}/comments/${props.comment.id}/upvote`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

@@ -24,7 +24,7 @@ export const useSocket = (onUpvote: (commentId: string) => void, onCommentSubmit
   }, [onUpvote, socket]);
 
   React.useEffect(() => {
-    const sock = new WebSocket('ws://localhost:4322');
+    const sock = new WebSocket(process.env.SOCKET_BASE);
     setSocket(sock);
 
     return () => {

@@ -10,13 +10,15 @@ const app = express();
 
 app.use(cors());
 
+app.use(express.static('client'));
+
 app.use(`/comments`, CommentsRouter);
 
 Init().then(() => {
-  app.listen(4321, () => console.log(`App listening on port 4321.`));
+  app.listen(process.env.PORT, () => console.log(`App listening on port ${process.env.PORT}.`));
 });
 
-const wss = new WebSocketServer({ port: 4322 });
+const wss = new WebSocketServer({ port: parseInt(process.env.WS_PORT, 10) });
 
 wss.on('connection', (ws) => {
   Sockets.Register(ws);

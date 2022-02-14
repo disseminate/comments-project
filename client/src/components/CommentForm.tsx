@@ -21,7 +21,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
     }
 
     try {
-      const resp = await fetch(`http://localhost:4321/comments`, {
+      const resp = await fetch(`${process.env.API_BASE}/comments`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

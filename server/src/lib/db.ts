@@ -15,7 +15,7 @@ export const Init = async () => {
   await Database.schema.hasTable('comments').then((has) => {
     if (!has) {
       return Database.schema.createTableIfNotExists('comments', (builder) => {
-        builder.uuid('id').unique();
+        builder.uuid('id').unique().primary();
         builder.uuid('parent_comment_id');
         builder.string('user_avatar'); // user fields would be in a user table if one existed
         builder.string('user_name');
@@ -28,7 +28,7 @@ export const Init = async () => {
   await Database.schema.hasTable('upvotes').then((has) => {
     if (!has) {
       return Database.schema.createTableIfNotExists('upvotes', (builder) => {
-        builder.uuid('id').unique();
+        builder.uuid('id').unique().primary();
         builder.uuid('comment_id').references('comments.id').withKeyName('fk_upvote_user_id');
       });
     }
