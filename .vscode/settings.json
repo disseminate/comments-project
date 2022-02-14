@@ -1,6 +1,8 @@
 {
   "files.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/.parcel-cache": true,
+    "**/dist": true
   },
   "editor.tabSize": 2,
   "editor.detectIndentation": false
