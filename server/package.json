@@ -22,6 +22,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only --watch \"./src/**/*\" --debounce 1000 -r dotenv/config src/index.ts"
+    "start": "ts-node-dev --respawn --transpile-only --watch \"./src/**/*\" --debounce 1000 -r dotenv/config src/index.ts",
+    "build": "tsc"
   }
 }

@@ -6,16 +6,24 @@ import { useSocket } from './socket';
 
 const App: React.FC = () => {
   const [comments, setComments] = React.useState<Comment[]>([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     let mounted = true;
 
-    fetch(`http://localhost:4321/comments`).then((resp) => {
-      resp.json().then((data: { comments: Comment[] }) => {
-        if (mounted) {
-          setComments(data.comments);
-        }
-      });
+    fetch(`${process.env.API_BASE}/comments`).then((resp) => {
+      resp
+        .json()
+        .then((data: { comments: Comment[] }) => {
+          if (mounted) {
+            setComments(data.comments);
+          }
+        })
+        .finally(() => {
+          if (mounted) {
+            setLoading(false);
+          }
+        });
     });
 
     return () => {
@@ -65,7 +73,7 @@ const App: React.FC = () => {
       <h1>Discussion</h1>
       <CommentForm />
       <hr />
-      <CommentList comments={comments} parentId={null} />
+      {loading ? <div>Loading...</div> : <CommentList comments={comments} parentId="" />}
     </>
   );
 };

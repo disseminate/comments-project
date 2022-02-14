@@ -11,7 +11,7 @@ const CommentList: React.FC<CommentListProps> = (props) => {
   return (
     <div id="comment-list">
       {props.comments.map((comment) =>
-        comment.parent_comment_id === props.parentId ? (
+        (comment.parent_comment_id || '') === props.parentId ? (
           <CommentElement
             key={comment.id}
             comment={comment}
